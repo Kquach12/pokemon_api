@@ -1,29 +1,29 @@
 import React, {useState, useEffect} from 'react'
+import axios from 'axios'
 
 const Pokemons = (props) => {
     const [pokemonArray, setPokemonArray] = useState([]);
-    const [count, setCount] = useState("")
-    const [isRequested, setIsRequested] = useState("")
+    // const [count, setCount] = useState("")
+    // const [isRequested, setIsRequested] = useState("")
 
     useEffect(() => {
-        console.log(count)
-        fetch(`https://pokeapi.co/api/v2/${count}`)
-            .then(response => response.json())
-            .then(response => setPokemonArray(response.results))
-    },[count]);
+        // console.log(count)
+        axios.get(`https://pokeapi.co/api/v2/pokemon?limit=807`)
+            .then(response => {setPokemonArray(response.data.results)})
+    },[]);
 
-    const getAll = () =>{
-        setCount("pokemon?limit=807")
-        setIsRequested(!isRequested)
-    }
+    // const getAll = () =>{
+    //     setCount("pokemon?limit=807")
+    //     setIsRequested(!isRequested)
+    // }
 
     return (
         <div>
-            <button onClick={getAll}>Fetch Pokemons</button>
-            {isRequested? 
+            {/* <button onClick={getAll}>Fetch Pokemons</button> */}
+            { 
             pokemonArray.map((pokemon, index)=>{
                 return (<div key={index}>{pokemon.name}</div>)
-            }): ""}
+            })}
         </div>
     );
 }
